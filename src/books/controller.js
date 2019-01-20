@@ -1,21 +1,129 @@
+const { pagination } = require('config');
+const {
+  book: Book,
+  author_book: AuthorBook,
+  Sequelize
+} = require('../libs/sequelize');
 
-function getBooks() {
 
+async function getBooks(ctx) {
+  const {
+    offset = 0,
+    amount = pagination.booksAmount,
+    type
+  } = ctx.query;
+  const { id: userId } = ctx.state.user;
+
+  const whereQuery = {};
+  if (type === 'available') {
+    whereQuery.user_id = null;
+  }
+  if (type === 'own') {
+    whereQuery.user_id = userId;
+  }
+
+  const books = await Book.findAll({
+    offset,
+    limit: amount,
+    order: [['created_at', 'DESC']],
+    where: whereQuery
+  });
+
+  ctx.body = {
+    books,
+    success: true,
+    message: 'Books were sent successfully'
+  };
 }
-function createBook() {
+async function createBook(ctx) {
+  const { authors, ...bookBody } = ctx.request.body;
 
+  const book = await Book.create(bookBody);
+  await AuthorBook.bulkCreate(authors.map(author_id =>
+    ({ author_id, book_id: book.id })));
+
+  ctx.body = {
+    bookId: book.id,
+    success: true,
+    message: 'Book was created successfully'
+  };
 }
-function takeBook() {
+async function takeBook(ctx) {
+  const { id: bookId } = ctx.params;
+  const { id: userId } = ctx.state.user;
 
+  const updRows = await Book.update({ user_id: userId }, {
+    where: { id: bookId }
+  });
+  if (!updRows[0]) {
+    ctx.throw(404, 'Book not found');
+  }
+
+  ctx.body = {
+    bookId,
+    success: true,
+    message: 'Book was taken successfully'
+  };
 }
-function returnBook() {
+async function returnBook(ctx) {
+  const { id: bookId } = ctx.params;
+  const { id: userId } = ctx.state.user;
 
+  const updRows = await Book.update({ user_id: null }, {
+    where: { id: bookId, user_id: userId }
+  });
+  if (!updRows[0]) {
+    ctx.throw(404, 'Book not found');
+  }
+
+  ctx.body = {
+    bookId,
+    success: true,
+    message: 'Book was returned successfully'
+  };
 }
-function updateBook() {
+async function updateBook(ctx) {
+  const { id: bookId } = ctx.params;
+  const { authors, ...bookBody } = ctx.request.body;
 
+  const updRows = await Promise.all([
+    Book.update(bookBody, {
+      where: { id: bookId }
+    }),
+    AuthorBook.destroy({
+      where: {
+        id: {
+          [Sequelize.Op.in]: authors
+        }
+      }
+    })
+  ]);
+  if (!updRows[0]) {
+    ctx.throw(404, 'Book not found');
+  }
+  await AuthorBook.bulkCreate(authors.map(author_id =>
+    ({ author_id, book_id: bookId })));
+
+  ctx.body = {
+    bookId,
+    success: true,
+    message: 'Book was updated successfully'
+  };
 }
-function removeBook() {
+async function removeBook(ctx) {
+  const { id: bookId } = ctx.params;
 
+  const book = await Book.findByPk(bookId);
+  if (!book) {
+    ctx.throw(404, 'Book not found');
+  }
+  await book.destroy();
+
+  ctx.body = {
+    bookId,
+    success: true,
+    message: 'Book was removed successfully'
+  };
 }
 
 

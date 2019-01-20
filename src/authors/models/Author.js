@@ -23,8 +23,9 @@ const RegisterAuthorModel = (sequelize, DataTypes) => {
   Author.sync();
 
   Author.associate = models => {
-    models.belongsToMany(models.book, {
+    models.author.belongsToMany(models.book, {
       foreignKey: 'author_id',
+      onDelete: 'CASCADE',
       through: models.author_book
     });
   };

@@ -15,7 +15,9 @@ const RegisterAuthorBookModel = (sequelize, DataTypes) => {
       allowNull: false
     }
   });
+
   AuthorBook.sync();
+  return AuthorBook;
 };
 
 module.exports = RegisterAuthorBookModel;

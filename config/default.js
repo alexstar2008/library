@@ -1,14 +1,19 @@
 module.exports = {
   PORT: 3000,
   baseUrl: '',
-  jwtsecret: '',
+  jwtsecret: 'test',
+  pagination: {
+    booksAmount: 25
+  },
   postgres: {
-    url: '',
+    database: '', 
+    username: '',
+    password: '',
     options: {
       dialect: 'postgres',
-      logging: false,
-      operatorsAliases: false,
-      timeout: 60000
+      host: '',
+      port: 5432,
+      logging: false, 
     }
   },
   aws: {

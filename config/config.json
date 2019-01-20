@@ -1,10 +1,10 @@
 {
   "development": {
-    "username": "",
-    "password": "",
-    "database": "",
-    "host": "",
-    "dialect": ""
+    "username": "library_user",
+    "password": "T3CZovxoBcrzeuhhWeaBsWbqZTwfC3",
+    "database": "library_test",
+    "host": "library-test-app.czif1mgxgdnp.eu-central-1.rds.amazonaws.com",
+    "dialect": "postgres"
   },
   "test": {
     "username": "",

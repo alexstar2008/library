@@ -10,6 +10,9 @@ sequelize.authenticate().then(() => {
 }).catch(console.error);
 
 const modules = [
+  'authors',
+  'books',
+  'clients'
 ];
 
 modules.forEach(moduleName => {

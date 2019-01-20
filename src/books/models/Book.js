@@ -23,10 +23,12 @@ const RegisterBookModel = (sequelize, DataTypes) => {
   Book.associate = models => {
     models.book.belongsToMany(models.author, {
       foreignKey: 'book_id',
-      through: 'author_book'
+      onDelete: 'CASCADE',
+      through: models.author_book
     });
     models.book.belongsTo(models.client, {
-      foreignKey: 'user_id'
+      foreignKey: 'user_id',
+      onDelete: 'CASCADE'
     });
   };
 

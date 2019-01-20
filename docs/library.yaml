@@ -63,7 +63,7 @@ components:
       properties:
         id:
           type: integer
-        name:
+        fullName:
           type: string
         photo:
           type: string

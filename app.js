@@ -6,7 +6,7 @@ const middlerwares = require('./src/middlewares');
 const authRouter = require('./src/auth/router');
 const authorsRouter = require('./src/authors/router');
 const booksRouter = require('./src/books/router');
-
+require('./src/libs/sequelize');
 
 const app = new Koa();
 
