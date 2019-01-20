@@ -9,10 +9,10 @@ const opts = {
   session: false
 };
 
-module.exports = new LocalStrategy(opts, async (req, email, password, done) => {
+module.exports = new LocalStrategy(opts, async (req, fullName, password, done) => {
   try {
     const client = await Client.findOne({
-      where: { email: email.toLowerCase() }
+      where: { fullName }
     });
     if (!client) {
       return done(null, false, { message: 'Client doesn\'t exist!' });

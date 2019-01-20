@@ -1,4 +1,3 @@
-
 const RegisterBookModel = (sequelize, DataTypes) => {
   const Book = sequelize.define('book', {
     id: {
@@ -14,7 +13,8 @@ const RegisterBookModel = (sequelize, DataTypes) => {
       type: DataTypes.DATE
     },
     user_id: {
-      type: DataTypes.INTEGER
+      type: DataTypes.INTEGER,
+      allowNull: true
     }
   });
 
@@ -36,4 +36,3 @@ const RegisterBookModel = (sequelize, DataTypes) => {
 };
 
 module.exports = RegisterBookModel;
-

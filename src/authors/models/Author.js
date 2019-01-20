@@ -1,5 +1,3 @@
-
-
 const RegisterAuthorModel = (sequelize, DataTypes) => {
   const Author = sequelize.define('author', {
     id: {
@@ -34,4 +32,3 @@ const RegisterAuthorModel = (sequelize, DataTypes) => {
 };
 
 module.exports = RegisterAuthorModel;
-

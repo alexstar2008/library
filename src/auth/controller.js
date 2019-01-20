@@ -1,7 +1,7 @@
 const passport = require('koa-passport');
 
 const {
-  user: User
+  client: Client
 } = require('../libs/sequelize');
 
 async function auth(ctx, next) {
@@ -20,7 +20,7 @@ async function auth(ctx, next) {
 async function register(ctx) {
   const { fullName, password, photo } = ctx.request.body;
 
-  const user = await User.create({
+  const user = await Client.create({
     fullName,
     photo,
     password

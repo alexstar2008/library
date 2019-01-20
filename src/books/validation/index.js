@@ -10,44 +10,43 @@ const {
 const Validation = {
   getBooks: validator({
     query: {
-      offset: number().integer().positive(),
+      offset: number().integer().min(0),
       amount: number().integer().positive(),
-      type: string().valid('availble', 'own')
+      type: string().valid('available', 'own')
     }
   }),
   createBook: validator({
     body: {
       title: string().max(255).required(),
       published_at: date(),
-      authors: array().items(number().integer().min(1))
+      authors: array().items(number().integer().positive())
     }
   }),
   updateBook: validator({
-    path: {
-      id: number().integer().min(1).required()
+    params: {
+      id: number().integer().positive().required()
     },
     body: {
       title: string().max(255).required(),
       published_at: date(),
-      authors: array().items(number().integer().min(1))
+      authors: array().items(number().integer().positive())
     }
   }),
   removeBook: validator({
-    path: {
-      id: number().integer().min(1).required()
+    params: {
+      id: number().integer().positive().required()
     }
   }),
   takeBook: validator({
-    path: {
-      id: number().integer().min(1).required()
+    params: {
+      id: number().integer().positive().required()
     }
   }),
   returnBook: validator({
-    path: {
-      id: number().integer().min(1).required()
+    params: {
+      id: number().integer().positive().required()
     }
   })
 };
-
 
 module.exports = Validation;

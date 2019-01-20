@@ -21,6 +21,12 @@ const RegisteClientModel = (sequelize, DataTypes) => {
       allowNull: false,
       defaultValue: DataTypes.NOW
     },
+    salt: {
+      type: DataTypes.STRING
+    },
+    passwordHash: {
+      type: DataTypes.STRING
+    },
     password: {
       type: DataTypes.VIRTUAL,
       validate: {
@@ -38,6 +44,7 @@ const RegisteClientModel = (sequelize, DataTypes) => {
       }
     }
   },{
+    // timestamps: false,
     indexes: [{ unique: true, fields: ['fullName'] }]
   });
 
@@ -58,7 +65,10 @@ const RegisteClientModel = (sequelize, DataTypes) => {
 
     return {
       token: jwt.encode(payload, config.jwtsecret),
-      user: await this.getUserProfile()
+      user: {
+        photo: this.photo,
+        fullName: this.fullName
+      }
     };
   };
 

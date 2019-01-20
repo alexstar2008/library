@@ -1,43 +1,39 @@
 const {
-  array,
   default: validator,
   number,
   string,
   date
 } = require('koa-context-validator');
 
-
 const Validation = {
   getAuthors: validator({
     query: {
-      offset: number().integer().positive(),
-      amount: number().integer().positive(),
-      type: string().valid('availble', 'own')
+      offset: number().integer().min(0),
+      amount: number().integer().positive()
     }
   }),
   createAuthor: validator({
     body: {
-      title: string().max(255).required(),
-      published_at: date(),
-      authors: array().items(number().integer().min(1))
+      first_name: string().max(100).required(),
+      last_name: string().required(),
+      birthday: date()
     }
   }),
   updateAuthor: validator({
-    path: {
-      id: number().integer().min(1).required()
+    params: {
+      id: number().integer().positive().required()
     },
     body: {
-      title: string().max(255).required(),
-      published_at: date(),
-      authors: array().items(number().integer().min(1))
+      first_name: string().max(100).required(),
+      last_name: string().required(),
+      birthday: date()
     }
   }),
   removeAuthor: validator({
-    path: {
-      id: number().integer().min(1).required()
+    params: {
+      id: number().integer().positive().required()
     }
   })
 };
-
 
 module.exports = Validation;

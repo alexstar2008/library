@@ -1,10 +1,9 @@
 const { pagination } = require('config');
 const {
+  author: Author,
   book: Book,
   author_book: AuthorBook,
-  Sequelize
 } = require('../libs/sequelize');
-
 
 async function getBooks(ctx) {
   const {
@@ -25,8 +24,13 @@ async function getBooks(ctx) {
   const books = await Book.findAll({
     offset,
     limit: amount,
-    order: [['created_at', 'DESC']],
-    where: whereQuery
+    order: [['createdAt', 'DESC']],
+    where: whereQuery,
+    include: {
+      model: Author,
+      attributes: ['id', 'first_name', 'last_name', 'birthday'],
+      through: { attributes: [] }
+    }
   });
 
   ctx.body = {
@@ -50,14 +54,22 @@ async function createBook(ctx) {
 }
 async function takeBook(ctx) {
   const { id: bookId } = ctx.params;
-  const { id: userId } = ctx.state.user;
+  const { id: userId, booksAmount } = ctx.state.user;
 
-  const updRows = await Book.update({ user_id: userId }, {
-    where: { id: bookId }
-  });
-  if (!updRows[0]) {
+  if (booksAmount > 5) {
+    ctx.throw(401, `Client can take only five books from the library. You have taken ${booksAmount} books.`);
+  }
+  const book = await Book.findByPk(bookId);
+  if (!book) {
     ctx.throw(404, 'Book not found');
   }
+  if (book.user_id) {
+    ctx.throw(400, 'Book is not available');
+  }
+
+  await Book.update({ user_id: userId }, {
+    where: { id: bookId }
+  });
 
   ctx.body = {
     bookId,
@@ -69,12 +81,17 @@ async function returnBook(ctx) {
   const { id: bookId } = ctx.params;
   const { id: userId } = ctx.state.user;
 
-  const updRows = await Book.update({ user_id: null }, {
-    where: { id: bookId, user_id: userId }
-  });
-  if (!updRows[0]) {
+  const book = await Book.findByPk(bookId);
+  if (!book) {
     ctx.throw(404, 'Book not found');
   }
+  if (!book.user_id) {
+    ctx.throw(400, 'Book is in the library');
+  }
+
+  await book.update({ user_id: null }, {
+    where: { id: bookId, user_id: userId }
+  });
 
   ctx.body = {
     bookId,
@@ -92,9 +109,7 @@ async function updateBook(ctx) {
     }),
     AuthorBook.destroy({
       where: {
-        id: {
-          [Sequelize.Op.in]: authors
-        }
+        book_id: bookId
       }
     })
   ]);
@@ -126,7 +141,6 @@ async function removeBook(ctx) {
   };
 }
 
-
 module.exports = {
   getBooks,
   createBook,
@@ -135,4 +149,3 @@ module.exports = {
   takeBook,
   returnBook
 };
-

@@ -19,8 +19,396 @@ tags:
     description: Client module
 
 paths:
+  /auth:  
+    post:
+      tags: 
+        - auth
+      summary: Authorize
+      description: Authorize
+      requestBody:
+        content: 
+          application/json: 
+            schema:
+              type: object
+              properties:
+                fullName: 
+                  type: string
+                  required: true
+                password:
+                  type: string
+                  required: true
+      responses:
+        200:
+          description: Success response
+          content:
+            application/json:
+              schema:
+                allOf: 
+                  - $ref: '#/components/schemas/ResSuccess'
+                  - type: object
+                    properties:
+                      token:
+                        type: string
+                      user:
+                        type: object
+        400:
+          description: Bad request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ResError'
+  /auth/register:  
+    post:
+      tags: 
+        - auth
+      summary: Register the new account
+      description: Register the new account
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                fullName:
+                  type: string
+                  maxLength: 200
+                password:
+                  type: string
+                  required: true
+      responses:
+        200:
+          content:
+            application/json:
+              schema:
+                allOf: 
+                  - $ref: '#/components/schemas/ResSuccess'
+                  - type: object
+                    properties:
+                      token:
+                        type: string
+                      user:
+                        type: object
+        400:
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ResError'
+  /authors:
+    get:
+      summary: Get authors with pagination
+      description: Get authors with pagination
+      tags: 
+        - authors
+      security:
+        - bearerAuth: []
+      parameters:
+        - in: query
+          name: amount
+          default: 25
+          schema:
+            type: integer
+        - in: query
+          name: offset
+          default: 0
+          schema:
+            type: integer
+      responses:
+        200:
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Author'
+        400:
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ResError'
+    post:
+      tags: 
+        - authors
+      summary: Create the new author
+      description: Create the new author
+      # security:
+      #   - bearerAuth: []
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/AuthorSrc'
+      responses:
+        200:
+          content:
+            application/json:
+              schema:
+                allOf: 
+                  - $ref: '#/components/schemas/ResSuccess'
+                  - type: object
+                    properties:
+                      authorId:
+                        type: integer
+        400:
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ResError'
+  /authors/{id}:
+    put:
+      tags: 
+        - authors
+      summary: Update author
+      description: Update author
+      security:
+        - bearerAuth: []
+      parameters:
+        - in: path
+          name: id
+          required: true
+          schema:
+            type: integer
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/AuthorSrc'
+      responses:
+        200:
+          content:
+            application/json:
+              schema:
+                allOf: 
+                  - $ref: '#/components/schemas/ResSuccess'
+                  - type: object
+                    properties:
+                      taskId:
+                        type: integer
+      400:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ResError'
+    delete:
+      tags: 
+        - authors
+      summary: Delete author
+      description: Delete author
+      parameters:
+        - in: path
+          name: id
+          required: true
+          description: Author id
+          schema:
+            type: integer
+      responses:
+        200:
+          content:
+            application/json:
+              schema:
+                allOf: 
+                  - $ref: '#/components/schemas/ResSuccess'
+                  - type: object
+                    properties:
+                      taskId:
+                        type: integer
+        400:
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ResError'
+  /books:
+    get: 
+      summary: Get books with pagination
+      description: Get books with pagination
+      tags: 
+        - books
+      security:
+        - bearerAuth: []
+      parameters:
+        - in: query
+          name: amount
+          default: 10
+          schema:
+            type: integer
+        - in: query
+          name: offset
+          default: 0
+          schema:
+            type: integer
+        - in: query
+          name: type
+          description: Choose type of books
+          schema:
+            enum: ['','own','available']
+            type: string
+      responses:
+        200:
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Book'
+        400:
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ResError'
+    post:
+      tags: 
+        - books
+      summary: Create the new book
+      description: Create the new book
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/BookSrc'
+      responses:
+        200:
+          content:
+            application/json:
+              schema:
+                allOf: 
+                  - $ref: '#/components/schemas/ResSuccess'
+                  - type: object
+                    properties:
+                      taskId:
+                        type: integer
+        400:
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ResError'
+  /books/{id}:
+    put:
+      tags: 
+        - books
+      summary: Update book
+      description: Update book
+      # security:
+      #   - bearerAuth: []
+      parameters:
+        - in: path
+          name: id
+          required: true
+          schema:
+            type: integer
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/BookSrc'
+      responses:
+        200:
+          content:
+            application/json:
+              schema:
+                allOf: 
+                  - $ref: '#/components/schemas/ResSuccess'
+                  - type: object
+                    properties:
+                      taskId:
+                        type: integer
+      400:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ResError'
+    delete:
+      tags: 
+        - books
+      summary: Delete book
+      description: Delete book
+      parameters:
+        - in: path
+          name: id
+          required: true
+          description: Book id
+          schema:
+            type: integer
+      responses:
+        200:
+          content:
+            application/json:
+              schema:
+                allOf: 
+                  - $ref: '#/components/schemas/ResSuccess'
+                  - type: object
+                    properties:
+                      taskId:
+                        type: integer
+        400:
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ResError'
+  /books/{id}/take:
+    post:
+      tags:
+        - books
+      summary: Change status of the book (is taken)
+      description: Change status of the book (is taken)
+      security:
+        - bearerAuth: []
+      parameters:
+        - in: path
+          name: id
+          required: true
+          schema:
+            type: integer
+      responses:
+        200:
+          content:
+            application/json:
+              schema:
+                allOf:
+                  - $ref: '#/components/schemas/ResSuccess'
+                  - type: object
+                    properties:
+                      taskId:
+                        type: integer
+        400:
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ResError'
+  /books/{id}/return:
+    post:
+      tags:
+        - books
+      summary: Change status of the task (is available)
+      description: Change status of the task (is available)
+      security:
+        - bearerAuth: []
+      parameters:
+        - in: path
+          name: id
+          required: true
+          schema:
+            type: integer
+      responses:
+        200:
+          content:
+            application/json:
+              schema:
+                allOf:
+                  - $ref: '#/components/schemas/ResSuccess'
+                  - type: object
+                    properties:
+                      taskId:
+                        type: integer
+        400:
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ResError'
 
 components:
+  securitySchemes:
+    bearerAuth:
+      type: http
+      scheme: bearer
   schemas:
     Author:
       type: object
@@ -34,10 +422,16 @@ components:
         birthday:
           type: string
           format: date-time
-        # books:
-        #   type: array
-        #   items:
-        #     type: object
+    AuthorSrc:
+      type: object
+      properties:
+        first_name:
+          type: string
+        last_name:
+          type: string
+        birthday:
+          type: string
+          format: date-time
     Book:
       type: object
       properties:
@@ -45,19 +439,25 @@ components:
           type: integer
         title:
           type: string
-        # authors:
-        #   type: array
-        #   items:
-        #     type: object
         published_at:
           type: string
           format: date-time
-        # created_at:
-        #   type: string
-        #   format: date-time
-        # updated_at:
-        #   type: string
-        #   format: date-time
+        authors:
+          type: array
+          items:
+            $ref: '#/components/schemas/Author'
+    BookSrc:
+      type: object
+      properties:
+        title:
+          type: string
+        published_at:
+          type: string
+          format: date-time
+        authors:
+          type: array
+          items:
+            type: integer
     Client:
       type: object
       properties:
@@ -71,4 +471,30 @@ components:
         registered_at:
           type: string
           format: date-time 
+    ClientSrc:
+      type: object
+      properties:
+        fullName:
+          type: string
+        photo:
+          type: string
+          description: AWS url to photo
+        registered_at:
+          type: string
+          format: date-time 
+    ResSuccess:
+      type: object
+      properties:
+        success: 
+          type: boolean
+          default: true
+        message:
+          type: string
+    ResError:
+      properties:
+        success: 
+          type: boolean
+          default: false
+        message:
+          type: string
 

@@ -1,4 +1,3 @@
-
 const RegisterAuthorBookModel = (sequelize, DataTypes) => {
   const AuthorBook = sequelize.define('author_book', {
     id: {

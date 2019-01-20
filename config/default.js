@@ -5,6 +5,12 @@ module.exports = {
   pagination: {
     booksAmount: 25
   },
+  crypto: {
+    hash: {
+      length: 128,
+      iterations: 1
+    }
+  },
   postgres: {
     database: '', 
     username: '',

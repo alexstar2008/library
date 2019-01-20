@@ -1,4 +1,5 @@
 const { pagination } = require('config');
+
 const {
   author: Author
 } = require('../libs/sequelize');
@@ -9,15 +10,14 @@ async function getAuthors(ctx) {
     amount = pagination.booksAmount
   } = ctx.query;
 
-  const books = await Author.findAll({
+  const authors = await Author.findAll({
     offset,
     limit: amount,
-    order: [['created_at', 'DESC']],
-    where: { offset, limit: amount }
+    order: [['createdAt', 'DESC']]
   });
 
   ctx.body = {
-    books,
+    authors,
     success: true,
     message: 'Authors were sent successfully'
   };
@@ -53,11 +53,10 @@ async function updateAuthor(ctx) {
 async function removeAuthor(ctx) {
   const { id: authorId } = ctx.params;
 
-  const author = await Author.findByPk(authorId);
+  const author = await Author.destroy({ where: { id: authorId } });
   if (!author) {
     ctx.throw(404, 'Author not found');
   }
-  await author.destroy();
 
   ctx.body = {
     authorId,
