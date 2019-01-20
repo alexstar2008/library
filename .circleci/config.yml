@@ -1,0 +1,108 @@
+version: 2
+
+references:
+
+  container_config: &container_config
+    docker:
+      - image: circleci/node:latest
+    working_directory: ~/circleci-combinvest
+
+  restore_npm_cache: &restore_npm_cache
+    restore_cache:
+      name: Restore npm cache
+      key: dependency-npm-{{ .Branch }}-{{ checksum "package.json" }}
+  
+  restore_repo: &restore_repo_cache
+    restore_cache:
+      name: Restore code cache
+      key: repo-{{ .Branch }}-{{ .Revision }} 
+
+jobs:
+  build:
+    <<: *container_config
+    steps:
+      - checkout
+      - save_cache:
+          name: Save code cache
+          key: repo-{{ .Branch }}-{{ .Revision }}
+          paths:
+            - .
+      - *restore_npm_cache
+      - run:
+          name: Update requirement dependecies
+          command: npm install
+      - save_cache:
+          name: Save npm cache
+          key: dependency-npm-{{ .Branch }}-{{ checksum "package.json" }}
+          paths:
+            - 'node_modules'
+  test:   
+    <<: *container_config
+    steps:
+      - *restore_repo_cache
+      - *restore_npm_cache
+      - run:
+          name: Test
+          command: npm run test
+      - run:
+          name: Generate code coverage
+          command: './node_modules/.bin/nyc report --reporter=html'
+      - store_artifacts:
+          path: test-results.xml
+          destination: tests
+      - store_artifacts:
+          path: coverage
+          destination: coverage
+  deploy:
+    <<: *container_config
+    steps:
+      - *restore_repo_cache
+      - *restore_npm_cache         
+      - setup_remote_docker
+      - run:
+          name: Set deployment for AWS Beanstalk
+          working_directory: /
+          command: |
+            sudo apt-get -y -qq update
+            sudo apt-get install python-pip python-dev build-essential
+            sudo pip install awsebcli --upgrade
+      - run:
+          name: Setup AWS credentials
+          command: |
+            mkdir ~/.aws && printf "[profile eb-cli]\naws_access_key_id = ${AWS_ACCESS_KEY_ID}\naws_secret_access_key = ${AWS_SECRET_ACCESS_KEY}" > ~/.aws/config
+      - run:
+          name: Deploying to AWS Beanstalk
+          command: |
+            if [ "$CIRCLE_BRANCH" == "master" ]
+              then
+                eb deploy $EB_MASTER
+                echo "Building master branch"
+            elif [ "$CIRCLE_BRANCH" == "dev" ]
+              then
+                eb deploy $EB_DEV
+            fi 
+workflows:
+  version: 2
+  development_deploy:
+    jobs:
+      - build:
+          filters:
+            branches:
+              only:
+                - dev     
+      - test:
+          requires:
+            - build
+      - deploy:
+          requires:
+            - test
+  production_deploy:
+    jobs:
+      - build:
+          filters:
+            branches:
+              only:
+                - master
+      - deploy:
+          requires:
+            - build

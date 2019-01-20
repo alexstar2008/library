@@ -1,0 +1,74 @@
+openapi: 3.0.0
+info:
+  title: Library Docs
+  description: Api Docs for the Library project
+  version: 0.0.1
+servers:
+  - url: http://localhost:3000/api/
+    description: Local server
+  - url: https://api-dev.library.com/api/
+    description: Dev server
+  - url: https://api.library.com/api/
+    description: Production server
+tags:
+  - name: authors
+    description: Authors module
+  - name: books
+    description: Books module
+  - name: client
+    description: Client module
+
+paths:
+
+components:
+  schemas:
+    Author:
+      type: object
+      properties:
+        id:
+          type: integer
+        first_name:
+          type: string
+        last_name:
+          type: string
+        birthday:
+          type: string
+          format: date-time
+        # books:
+        #   type: array
+        #   items:
+        #     type: object
+    Book:
+      type: object
+      properties:
+        id:
+          type: integer
+        title:
+          type: string
+        # authors:
+        #   type: array
+        #   items:
+        #     type: object
+        published_at:
+          type: string
+          format: date-time
+        # created_at:
+        #   type: string
+        #   format: date-time
+        # updated_at:
+        #   type: string
+        #   format: date-time
+    Client:
+      type: object
+      properties:
+        id:
+          type: integer
+        name:
+          type: string
+        photo:
+          type: string
+          description: AWS url to photo
+        registered_at:
+          type: string
+          format: date-time 
+
