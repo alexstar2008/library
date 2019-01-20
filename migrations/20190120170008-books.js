@@ -20,6 +20,8 @@ module.exports = {
       user_id: {
         type: DataTypes.INTEGER
       }
+    },{
+      underscored: true
     });
   },
 

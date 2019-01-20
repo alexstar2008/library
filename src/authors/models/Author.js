@@ -16,6 +16,8 @@ const RegisterAuthorModel = (sequelize, DataTypes) => {
     birthday: {
       type: DataTypes.DATE
     }
+  }, {
+    timestamps: false
   });
 
   Author.sync();

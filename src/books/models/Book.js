@@ -16,6 +16,8 @@ const RegisterBookModel = (sequelize, DataTypes) => {
       type: DataTypes.INTEGER,
       allowNull: true
     }
+  },{
+    underscored: true
   });
 
   Book.sync();

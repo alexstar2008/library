@@ -16,16 +16,17 @@ const RegisteClientModel = (sequelize, DataTypes) => {
     photo: {
       type: DataTypes.STRING(100),
     },
-    registered_at: {
-      type: DataTypes.DATE,
-      allowNull: false,
-      defaultValue: DataTypes.NOW
-    },
     salt: {
       type: DataTypes.STRING
     },
     passwordHash: {
       type: DataTypes.STRING
+    },
+    registered_at: {
+      type: DataTypes.VIRTUAL,
+      get(){
+        return this.created_at;
+      }
     },
     password: {
       type: DataTypes.VIRTUAL,
@@ -44,7 +45,7 @@ const RegisteClientModel = (sequelize, DataTypes) => {
       }
     }
   },{
-    // timestamps: false,
+    underscored: true,
     indexes: [{ unique: true, fields: ['fullName'] }]
   });
 

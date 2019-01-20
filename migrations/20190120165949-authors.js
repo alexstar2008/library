@@ -21,6 +21,8 @@ module.exports = {
       birthday: {
         type: DataTypes.DATE
       }
+    },{
+      timestamps: false
     });
   },
 

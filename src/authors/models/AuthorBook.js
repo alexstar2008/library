@@ -13,6 +13,8 @@ const RegisterAuthorBookModel = (sequelize, DataTypes) => {
       type: DataTypes.INTEGER,
       allowNull: false
     }
+  },{
+    timestamps: false
   });
 
   AuthorBook.sync();

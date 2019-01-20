@@ -17,11 +17,15 @@ module.exports = {
       photo: {
         type: DataTypes.STRING(100),
       },
-      registered_at: {
-        type: DataTypes.DATE,
-        allowNull: false,
-        defaultValue: DataTypes.NOW
-      }
+      salt: {
+        type: DataTypes.STRING
+      },
+      passwordHash: {
+        type: DataTypes.STRING
+      },
+    },{
+      underscored: true,
+      indexes: [{ unique: true, fields: ['fullName'] }]
     });
   },
 
