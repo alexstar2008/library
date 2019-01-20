@@ -6,15 +6,15 @@ module.exports = {
     url: '',
     options: {
       dialect: 'postgres',
-      host: '',
-      port: 5432,
-      logging: false, 
+      logging: false,
+      operatorsAliases: false,
+      timeout: 60000
     }
   },
   aws: {
     defaultImg: '',
     accessKeyId: '',
-    secretAccessKey: '',
+    secretAccessKey: '  ',
     bucketName: '',
   },
 

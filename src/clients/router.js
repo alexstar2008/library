@@ -1,11 +1,12 @@
 const Router = require('koa-router');
 
-const ClientsController = require('./controller');
-const Validation = require('./validation');
+// const ClientsController = require('./controller');
+// const Validation = require('./validation');
 
 const router = new Router({
-  prefix: '/authors'
+  prefix: '/clients'
 });
+
 
 module.exports = router;
 
