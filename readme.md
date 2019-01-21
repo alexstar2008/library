@@ -10,7 +10,7 @@
   Swagger docs link: `http://library-prod.eu-central-1.elasticbeanstalk.com/docs`
 
 ## Server
-  Link : *** ***
+  Link : *** http://library-prod.eu-central-1.elasticbeanstalk.com ***
 <p>
   Apllication is deployed to AWS Elastic Beanstalk. 
   Automatic deployment is based on CircleCI tool. 
@@ -31,3 +31,4 @@
 
 ## TODO:
  - Buy domain & configure ssl certificates
+ - Implement user profile operations
