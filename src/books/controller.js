@@ -24,7 +24,7 @@ async function getBooks(ctx) {
   const books = await Book.findAll({
     offset,
     limit: amount,
-    order: [['createdAt', 'DESC']],
+    order: [['created_at', 'DESC']],
     where: whereQuery,
     include: {
       model: Author,

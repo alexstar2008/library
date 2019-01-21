@@ -12,8 +12,7 @@ async function getAuthors(ctx) {
 
   const authors = await Author.findAll({
     offset,
-    limit: amount,
-    order: [['createdAt', 'DESC']]
+    limit: amount
   });
 
   ctx.body = {

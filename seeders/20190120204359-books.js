@@ -10,7 +10,7 @@ module.exports = {
     for (let i = 0; i < 500; i++) {
       fakeBooks.push({
         title: faker.name.title(),
-        published_at: faker.date.past(100),
+        created_at: faker.date.past(100),
         user_id: Math.ceil(i / 5),
         created_at: new Date()
       });

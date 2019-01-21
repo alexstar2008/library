@@ -128,10 +128,10 @@ paths:
     post:
       tags: 
         - authors
-      summary: Create the new author
+      summary: '[Admin] Create the new author'
       description: Create the new author
-      # security:
-      #   - bearerAuth: []
+      security:
+        - bearerAuth: []
       requestBody:
         content:
           application/json:
@@ -157,7 +157,7 @@ paths:
     put:
       tags: 
         - authors
-      summary: Update author
+      summary: '[Admin] Update author'
       description: Update author
       security:
         - bearerAuth: []
@@ -181,7 +181,7 @@ paths:
                   - $ref: '#/components/schemas/ResSuccess'
                   - type: object
                     properties:
-                      taskId:
+                      bookId:
                         type: integer
       400:
         content:
@@ -191,8 +191,10 @@ paths:
     delete:
       tags: 
         - authors
-      summary: Delete author
+      summary: '[Admin] Delete author'
       description: Delete author
+      security:
+        - bearerAuth: []
       parameters:
         - in: path
           name: id
@@ -209,7 +211,7 @@ paths:
                   - $ref: '#/components/schemas/ResSuccess'
                   - type: object
                     properties:
-                      taskId:
+                      bookId:
                         type: integer
         400:
           content:
@@ -218,8 +220,8 @@ paths:
                 $ref: '#/components/schemas/ResError'
   /books:
     get: 
-      summary: Get books with pagination
-      description: Get books with pagination
+      summary: Get books with pagination (all, available -> books in the library, taken -> books which user took)
+      description: Get books with pagination (all, available -> books in the library, taken -> books which user took)
       tags: 
         - books
       security:
@@ -257,8 +259,10 @@ paths:
     post:
       tags: 
         - books
-      summary: Create the new book
+      summary: '[Admin] Create the new book'
       description: Create the new book
+      security:
+        - bearerAuth: []
       requestBody:
         content:
           application/json:
@@ -273,7 +277,7 @@ paths:
                   - $ref: '#/components/schemas/ResSuccess'
                   - type: object
                     properties:
-                      taskId:
+                      bookId:
                         type: integer
         400:
           content:
@@ -284,10 +288,10 @@ paths:
     put:
       tags: 
         - books
-      summary: Update book
+      summary: '[Admin] Update book'
       description: Update book
-      # security:
-      #   - bearerAuth: []
+      security:
+        - bearerAuth: []
       parameters:
         - in: path
           name: id
@@ -308,7 +312,7 @@ paths:
                   - $ref: '#/components/schemas/ResSuccess'
                   - type: object
                     properties:
-                      taskId:
+                      bookId:
                         type: integer
       400:
         content:
@@ -318,8 +322,10 @@ paths:
     delete:
       tags: 
         - books
-      summary: Delete book
+      summary: '[Admin] Delete book'
       description: Delete book
+      security:
+        - bearerAuth: []
       parameters:
         - in: path
           name: id
@@ -336,7 +342,7 @@ paths:
                   - $ref: '#/components/schemas/ResSuccess'
                   - type: object
                     properties:
-                      taskId:
+                      bookId:
                         type: integer
         400:
           content:
@@ -366,7 +372,7 @@ paths:
                   - $ref: '#/components/schemas/ResSuccess'
                   - type: object
                     properties:
-                      taskId:
+                      bookId:
                         type: integer
         400:
           content:
@@ -396,7 +402,7 @@ paths:
                   - $ref: '#/components/schemas/ResSuccess'
                   - type: object
                     properties:
-                      taskId:
+                      bookId:
                         type: integer
         400:
           content:
@@ -440,6 +446,11 @@ components:
         title:
           type: string
         published_at:
+          type: string
+          format: date-time
+        user_id:
+          type: integer
+        created_at:
           type: string
           format: date-time
         authors:
