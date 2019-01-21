@@ -31,7 +31,7 @@ paths:
             schema:
               type: object
               properties:
-                fullName: 
+                full_name: 
                   type: string
                   required: true
                 password:
@@ -69,7 +69,7 @@ paths:
             schema:
               type: object
               properties:
-                fullName:
+                full_name:
                   type: string
                   maxLength: 200
                 password:
@@ -474,7 +474,7 @@ components:
       properties:
         id:
           type: integer
-        fullName:
+        full_name:
           type: string
         photo:
           type: string
@@ -485,7 +485,7 @@ components:
     usersrc:
       type: object
       properties:
-        fullName:
+        full_name:
           type: string
         photo:
           type: string

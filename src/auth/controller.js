@@ -18,10 +18,10 @@ async function auth(ctx, next) {
   })(ctx, next);
 }
 async function register(ctx) {
-  const { fullName, password, photo } = ctx.request.body;
+  const { full_name, password, photo } = ctx.request.body;
 
   const user = await User.create({
-    fullName,
+    full_name,
     photo,
     password
   });

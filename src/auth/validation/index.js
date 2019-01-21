@@ -6,13 +6,13 @@ const {
 module.exports = {
   auth: validator({
     body: {
-      fullName: string().required(),
+      full_name: string().required(),
       password: string().required(),
     }
   }),
   register: validator({
     body: {
-      fullName: string().required(),
+      full_name: string().required(),
       password: string().required(),
     }
   })

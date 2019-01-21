@@ -20,31 +20,32 @@ module.exports = {
     const fakeusers = [];
     for (let i = 0; i < 100; i++) {
       fakeusers.push({
-        fullName: faker.name.firstName(),
+        full_name: `${faker.random.number}${faker.name.firstName()}`,
         role: 'user',
         photo: faker.internet.avatar(),
         ...hashPassword(faker.internet.password(6)),
         created_at: new Date()
       });
     }
+    
 
     return queryInterface.bulkInsert(tableName, [
       {
-        fullName: 'Admin1',
+        full_name: 'Admin1',
         role: 'admin',
         photo: faker.internet.avatar(),
         ...hashPassword('qwerty'),
         created_at: new Date()
       },
       {
-        fullName: 'Client1',
+        full_name: 'Client1',
         role: 'user',
         photo: faker.internet.avatar(),
         ...hashPassword('123456'),
         created_at: new Date()
       },
       {
-        fullName: 'Client2',
+        full_name: 'Client2',
         role: 'user',
         photo: faker.internet.avatar(),
         ...hashPassword('123456'),

@@ -9,7 +9,7 @@ const RegisteUserModel = (sequelize, DataTypes) => {
       primaryKey: true,
       autoIncrement: true
     },
-    fullName: {
+    full_name: {
       type: DataTypes.STRING,
       allowNull: false
     },
@@ -52,7 +52,7 @@ const RegisteUserModel = (sequelize, DataTypes) => {
   },{
     underscored: true,
     updatedAt: false,
-    indexes: [{ unique: true, fields: ['fullName'] }]
+    // indexes: [{ unique: true, fields: ['full_name'] }]
   });
 
   User.sync();
@@ -67,14 +67,14 @@ const RegisteUserModel = (sequelize, DataTypes) => {
   User.prototype.getAuthData = async function () {
     const payload = {
       id: this.id,
-      fullName: this.fullName
+      full_name: this.full_name
     };
 
     return {
       token: jwt.encode(payload, config.jwtsecret),
       user: {
         photo: this.photo,
-        fullName: this.fullName
+        full_name: this.full_name
       }
     };
   };

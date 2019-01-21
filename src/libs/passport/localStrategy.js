@@ -3,16 +3,16 @@ const LocalStrategy = require('passport-local');
 const { user: User } = require('../../libs/sequelize');
 
 const opts = {
-  usernameField: 'fullName',
+  usernameField: 'full_name',
   passwordField: 'password',
   passReqToCallback: true,
   session: false
 };
 
-module.exports = new LocalStrategy(opts, async (req, fullName, password, done) => {
+module.exports = new LocalStrategy(opts, async (req, full_name, password, done) => {
   try {
     const user = await User.findOne({
-      where: { fullName }
+      where: { full_name }
     });
     if (!user) {
       return done(null, false, { message: 'User doesn\'t exist!' });

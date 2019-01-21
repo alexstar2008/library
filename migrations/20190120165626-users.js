@@ -10,7 +10,7 @@ module.exports = {
         primaryKey: true,
         autoIncrement: true
       },
-      fullName: {
+      full_name: {
         type: DataTypes.STRING,
         allowNull: false
       },
@@ -30,7 +30,7 @@ module.exports = {
       },
       created_at: DataTypes.DATE
     },{
-      indexes: [{ unique: true, fields: ['fullName'] }]
+      indexes: [{ unique: true, fields: ['full_name'] }]
     });
   },
 
