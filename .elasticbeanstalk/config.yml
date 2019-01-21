@@ -1,9 +1,12 @@
 branch-defaults:
   master:
-    environment: null
-    group_suffix: null
+    environment: library-prod
+environment-defaults:
+  library-prod:
+    branch: null
+    repository: null
 global:
-  application_name: Library
+  application_name: library
   branch: null
   default_ec2_keyname: null
   default_platform: Docker 18.06.1-ce

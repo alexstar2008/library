@@ -82,3 +82,8 @@ socket-connection-example.html
 # My file
 _.html
 
+
+# Elastic Beanstalk Files
+.elasticbeanstalk/*
+!.elasticbeanstalk/*.cfg.yml
+!.elasticbeanstalk/*.global.yml
