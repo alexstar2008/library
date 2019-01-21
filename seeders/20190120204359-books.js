@@ -11,7 +11,7 @@ module.exports = {
       fakeBooks.push({
         title: faker.name.title(),
         published_at: faker.date.past(100),
-        user_id: Math.ceil(i / 5),
+        user_id: i % 5 === 0 ? i / 5 : null,
         created_at: new Date()
       });
     }

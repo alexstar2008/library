@@ -57,7 +57,7 @@ async function takeBook(ctx) {
   const { id: userId, booksAmount } = ctx.state.user;
 
   if (booksAmount > 5) {
-    ctx.throw(401, `User can take only five books from the library. You have taken ${booksAmount} books.`);
+    ctx.throw(403, `User can take only five books from the library. You have taken ${booksAmount} books.`);
   }
   const book = await Book.findByPk(bookId);
   if (!book) {
@@ -86,7 +86,10 @@ async function returnBook(ctx) {
     ctx.throw(404, 'Book not found');
   }
   if (!book.user_id) {
-    ctx.throw(400, 'Book is in the library');
+    ctx.throw(403, 'Book is in the library');
+  }
+  if (book.user_id !== userId) {
+    ctx.throw(403, 'It isn\'t your book');
   }
 
   await book.update({ user_id: null }, {
