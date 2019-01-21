@@ -22,7 +22,7 @@ module.exports = {
       fakeusers.push({
         fullName: faker.name.firstName(),
         role: 'user',
-        // photo: '',
+        photo: faker.internet.avatar(),
         ...hashPassword(faker.internet.password(6)),
         created_at: new Date()
       });
@@ -32,21 +32,21 @@ module.exports = {
       {
         fullName: 'Admin1',
         role: 'admin',
-        // photo: faker.internet.avatar(),
+        photo: faker.internet.avatar(),
         ...hashPassword('qwerty'),
         created_at: new Date()
       },
       {
         fullName: 'Client1',
         role: 'user',
-        // photo: faker.internet.avatar(),
+        photo: faker.internet.avatar(),
         ...hashPassword('123456'),
         created_at: new Date()
       },
       {
         fullName: 'Client2',
         role: 'user',
-        // photo: faker.internet.avatar(),
+        photo: faker.internet.avatar(),
         ...hashPassword('123456'),
         created_at: new Date()
       },

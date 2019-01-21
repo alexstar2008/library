@@ -12,11 +12,21 @@ module.exports = {
       },
       author_id: {
         type: DataTypes.INTEGER,
-        allowNull: false
+        allowNull: false,
+        references: {
+          model: 'authors',
+          key: 'id',
+          onDelete: 'CASCADE'
+        }
       },
       book_id: {
         type: DataTypes.INTEGER,
-        allowNull: false
+        allowNull: false,
+        references: {
+          model: 'books',
+          key: 'id',
+          onDelete: 'CASCADE'
+        }
       }
     },{
       tableName: 'authors_books'

@@ -18,7 +18,11 @@ module.exports = {
         type: DataTypes.DATE
       },
       user_id: {
-        type: DataTypes.INTEGER
+        type: DataTypes.INTEGER,
+        references: {
+          model: 'users',
+          key: 'id'
+        }
       },
       created_at: DataTypes.DATE
     });
