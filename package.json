@@ -11,7 +11,7 @@
     "report": "./node_modules/.bin/nyc report --reporter=html",
     "seed:all": "node_modules/.bin/sequelize db:seed:all",
     "seed:create": "node_modules/.bin/sequelize seed:generate --name",
-    "serve": "nodemon app",
+    "serve": "node_modules/.bin/nodemon app",
     "start": "node app",
     "test": "NODE_ENV=test ./node_modules/.bin/nyc --reporter=html  ./node_modules/.bin/mocha  --exit --timeout 15000 --recursive $(find app -name '*test.js')",
     "unmigrate:all": "node_modules/.bin/sequelize db:migrate:undo:all",
@@ -46,7 +46,7 @@
     "eslint-config-airbnb-base": "^13.1.0",
     "eslint-plugin-import": "^2.14.0",
     "mocha": "^5.1.1",
-    "nodemon": "^1.18.6",
+    "nodemon": "^1.18.9",
     "nyc": "^11.7.3"
   }
 }
