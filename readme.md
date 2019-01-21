@@ -1,4 +1,4 @@
-# Simple test application
+# Simple REST API test application
 
 ## Test credentials
 
@@ -7,10 +7,10 @@
   - ***User2*** -> Fullname: ***User2*** Password: ***123456***  
 
 ## DOCS
-  Swagger docs link: `http://library-prod.eu-central-1.elasticbeanstalk.com/docs`
+  Swagger docs link: [Swagger](http://library-prod.eu-central-1.elasticbeanstalk.com/docs)
 
 ## Server
-  Link : *** http://library-prod.eu-central-1.elasticbeanstalk.com ***
+  Link : [Server](http://library-prod.eu-central-1.elasticbeanstalk.com)
 <p>
   Apllication is deployed to AWS Elastic Beanstalk. 
   Automatic deployment is based on CircleCI tool. 
