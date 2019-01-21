@@ -12,12 +12,12 @@ module.exports = {
     }
   },
   postgres: {
-    database: '', 
-    username: '',
-    password: '',
+    database: 'library_test', 
+    username: 'library_user',
+    password: 'T3CZovxoBcrzeuhhWeaBsWbqZTwfC3',
     options: {
       dialect: 'postgres',
-      host: '',
+      host: 'library-test-app.czif1mgxgdnp.eu-central-1.rds.amazonaws.com',
       port: 5432,
       logging: false, 
     }

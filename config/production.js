@@ -2,12 +2,14 @@ module.exports = {
   PORT: process.env.PORT,
   jwtsecret: process.env.JWT,
   postgres: {
-    url: process.env.DB_URL,
+    database: process.env.DB_NAME, 
+    username: process.env.DB_USER,
+    password: process.env.DB_PASS,
     options: {
       dialect: 'postgres',
-      logging: false,
-      operatorsAliases: false,
-      timeout: 60000
+      host: process.env.DB_HOST,
+      port: 5432,
+      logging: false, 
     }
   },
   aws: {
