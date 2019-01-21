@@ -15,8 +15,8 @@ tags:
     description: Authors module
   - name: books
     description: Books module
-  - name: client
-    description: Client module
+  - name: user
+    description: User module
 
 paths:
   /auth:  
@@ -458,7 +458,7 @@ components:
           type: array
           items:
             type: integer
-    Client:
+    User:
       type: object
       properties:
         id:
@@ -471,7 +471,7 @@ components:
         registered_at:
           type: string
           format: date-time 
-    ClientSrc:
+    usersrc:
       type: object
       properties:
         fullName:

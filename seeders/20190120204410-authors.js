@@ -7,13 +7,11 @@ module.exports = {
     await queryInterface.sequelize.query(`ALTER SEQUENCE ${tableName}_id_seq RESTART WITH 1`);
 
     const fakeAuthors = [];
-    for (let i = 0; i <= 100; i++) {
+    for (let i = 0; i < 100; i++) {
       fakeAuthors.push({
         first_name: faker.name.firstName(),
         last_name: faker.name.lastName(),
-        birthday: faker.date.past(50),
-        createdAt: new Date(),
-        updatedAt: new Date()
+        birthday: faker.date.past(50)
       });
     }
 

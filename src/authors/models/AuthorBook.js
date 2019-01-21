@@ -14,7 +14,8 @@ const RegisterAuthorBookModel = (sequelize, DataTypes) => {
       allowNull: false
     }
   },{
-    timestamps: false
+    timestamps: false,
+    tableName: 'authors_books'
   });
 
   AuthorBook.sync();

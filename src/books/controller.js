@@ -57,7 +57,7 @@ async function takeBook(ctx) {
   const { id: userId, booksAmount } = ctx.state.user;
 
   if (booksAmount > 5) {
-    ctx.throw(401, `Client can take only five books from the library. You have taken ${booksAmount} books.`);
+    ctx.throw(401, `User can take only five books from the library. You have taken ${booksAmount} books.`);
   }
   const book = await Book.findByPk(bookId);
   if (!book) {

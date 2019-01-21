@@ -17,7 +17,8 @@ const RegisterBookModel = (sequelize, DataTypes) => {
       allowNull: true
     }
   },{
-    underscored: true
+    underscored: true,
+    updatedAt: false
   });
 
   Book.sync();
@@ -28,7 +29,7 @@ const RegisterBookModel = (sequelize, DataTypes) => {
       onDelete: 'CASCADE',
       through: models.author_book
     });
-    models.book.belongsTo(models.client, {
+    models.book.belongsTo(models.user, {
       foreignKey: 'user_id',
       onDelete: 'CASCADE'
     });

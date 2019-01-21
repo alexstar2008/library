@@ -1,6 +1,6 @@
 'use strict';
 
-const tableName = 'author_books';
+const tableName = 'authors_books';
 const faker = require('faker');
 
 module.exports = {
@@ -11,31 +11,23 @@ module.exports = {
 
     for (let i = 1; i <= 10; i++) {
       fakerAuthorBooks.push({
-        user_id: 1,
-        book_id: i,
-        createdAt: new Date(),
-        updatedAt: new Date()
+        author_id: 1,
+        book_id: i
       });
       fakerAuthorBooks.push({
-        user_id: 2,
-        book_id: i + 10,
-        createdAt: new Date(),
-        updatedAt: new Date()
+        author_id: 2,
+        book_id: i + 10
       });
       fakerAuthorBooks.push({
-        user_id: 3,
-        book_id: i + 20,
-        createdAt: new Date(),
-        updatedAt: new Date()
+        author_id: 3,
+        book_id: i + 20
       });
     }
 
-    for (let i = 1; i <= 50; i++) {
+    for (let i = 1; i <= 100; i++) {
       fakerAuthorBooks.push({
-        user_id: faker.random.number({ min: 31, max: 100 }),
-        conversation_id: faker.random.number({ min: 4, max: 100 }),
-        createdAt: new Date(),
-        updatedAt: new Date()
+        author_id: faker.random.number({ min: 4, max: 100 }),
+        book_id: faker.random.number({ min: 31, max: 500 })
       });
     }
 

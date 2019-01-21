@@ -12,7 +12,7 @@ sequelize.authenticate().then(() => {
 const modules = [
   'authors',
   'books',
-  'clients'
+  'users'
 ];
 
 modules.forEach(moduleName => {

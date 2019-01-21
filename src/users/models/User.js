@@ -2,8 +2,8 @@ const config = require('config');
 const crypto = require('crypto');
 const jwt = require('jwt-simple');
 
-const RegisteClientModel = (sequelize, DataTypes) => {
-  const Client = sequelize.define('client', {
+const RegisteUserModel = (sequelize, DataTypes) => {
+  const User = sequelize.define('user', {
     id: {
       type: DataTypes.INTEGER,
       primaryKey: true,
@@ -12,6 +12,11 @@ const RegisteClientModel = (sequelize, DataTypes) => {
     fullName: {
       type: DataTypes.STRING,
       allowNull: false
+    },
+    role: {
+      type: DataTypes.STRING,
+      allowNull: false,
+      defaultValue: 'user'
     },
     photo: {
       type: DataTypes.STRING(100),
@@ -46,19 +51,20 @@ const RegisteClientModel = (sequelize, DataTypes) => {
     }
   },{
     underscored: true,
+    updatedAt: false,
     indexes: [{ unique: true, fields: ['fullName'] }]
   });
 
-  Client.sync();
+  User.sync();
 
-  Client.associate = models => {
-    models.client.hasMany(models.book, {
+  User.associate = models => {
+    models.user.hasMany(models.book, {
       foreignKey: 'user_id',
       onDelete: 'CASCADE'
     });
   };
 
-  Client.prototype.getAuthData = async function () {
+  User.prototype.getAuthData = async function () {
     const payload = {
       id: this.id,
       fullName: this.fullName
@@ -73,7 +79,7 @@ const RegisteClientModel = (sequelize, DataTypes) => {
     };
   };
 
-  Client.prototype.checkPassword = function (password) {
+  User.prototype.checkPassword = function (password) {
     if (!password || !this.passwordHash)
       return false;
 
@@ -83,7 +89,7 @@ const RegisteClientModel = (sequelize, DataTypes) => {
   };
 
 
-  return Client;
+  return User;
 };
 
-module.exports = RegisteClientModel;
+module.exports = RegisteUserModel;

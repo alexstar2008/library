@@ -1,6 +1,6 @@
 'use strict';
 
-const tableName = 'clients';
+const tableName = 'books';
 
 module.exports = {
   up: (queryInterface, DataTypes) => {
@@ -19,13 +19,10 @@ module.exports = {
       },
       user_id: {
         type: DataTypes.INTEGER
-      }
-    },{
-      underscored: true
+      },
+      created_at: DataTypes.DATE
     });
   },
 
-  down: queryInterface => {
-    return queryInterface.dropTable(tableName);
-  }
+  down: queryInterface => queryInterface.dropTable(tableName)
 };

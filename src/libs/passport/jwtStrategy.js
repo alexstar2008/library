@@ -2,7 +2,7 @@ const { Strategy: JwtStrategy, ExtractJwt } = require('passport-jwt');
 const config = require('config');
 
 const {
-  client: Client,
+  user: User,
   book: Book
 } = require('../../libs/sequelize');
 
@@ -13,14 +13,14 @@ const opts = {
 
 module.exports = new JwtStrategy(opts, async (jwt_payload, done) => {
   try {
-    const [client, booksAmount] = await Promise.all([
-      Client.findByPk(jwt_payload.id),
+    const [user, booksAmount] = await Promise.all([
+      User.findByPk(jwt_payload.id),
       Book.count({ where: { user_id: jwt_payload.id } })
     ]);
 
-    if (client) {
-      client.booksAmount = booksAmount;
-      return done(null, client);
+    if (user) {
+      user.booksAmount = booksAmount;
+      return done(null, user);
     }
     return done(null, false);
   } catch (err) {

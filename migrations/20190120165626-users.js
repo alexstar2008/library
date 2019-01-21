@@ -1,6 +1,6 @@
 'use strict';
 
-const tableName = 'clients';
+const tableName = 'users';
 
 module.exports = {
   up: (queryInterface, DataTypes) => {
@@ -14,6 +14,11 @@ module.exports = {
         type: DataTypes.STRING,
         allowNull: false
       },
+      role: {
+        type: DataTypes.STRING,
+        allowNull: false,
+        defaultValue: 'user'
+      },
       photo: {
         type: DataTypes.STRING(100),
       },
@@ -23,13 +28,11 @@ module.exports = {
       passwordHash: {
         type: DataTypes.STRING
       },
+      created_at: DataTypes.DATE
     },{
-      underscored: true,
       indexes: [{ unique: true, fields: ['fullName'] }]
     });
   },
 
-  down: queryInterface => {
-    return queryInterface.dropTable(tableName);
-  }
+  down: queryInterface => queryInterface.dropTable(tableName)
 };

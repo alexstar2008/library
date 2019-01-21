@@ -1,6 +1,6 @@
 'use strict';
 
-const tableName = 'clients';
+const tableName = 'authors';
 
 module.exports = {
   up: (queryInterface, DataTypes) => {
@@ -21,12 +21,8 @@ module.exports = {
       birthday: {
         type: DataTypes.DATE
       }
-    },{
-      timestamps: false
     });
   },
 
-  down: queryInterface => {
-    return queryInterface.dropTable(tableName);
-  }
+  down: queryInterface => queryInterface.dropTable(tableName)
 };

@@ -10,9 +10,22 @@ const router = new Router({
 
 router.use(passport.authenticate('jwt', { session: false }));
 router.get('/', Validation.getAuthors, AuthorsController.getAuthors);
+
+router.use(allowAdmin);
 router.post('/', Validation.createAuthor, AuthorsController.createAuthor);
 router.put('/:id', Validation.updateAuthor, AuthorsController.updateAuthor);
 router.del('/:id', Validation.removeAuthor, AuthorsController.removeAuthor);
+
+async function allowAdmin(ctx, next) {
+  if (ctx.state.user.role !== 'admin') {
+    ctx.status = 403;
+    ctx.message = 'Unauthorized (Only admin allowed)';
+    return;
+  }
+  await next();
+}
+
+
 
 module.exports = router;
 

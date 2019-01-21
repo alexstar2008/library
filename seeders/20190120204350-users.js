@@ -1,7 +1,7 @@
 const faker = require('faker');
 const crypto = require('crypto');
 const config = require('config');
-const tableName = 'clients';
+const tableName = 'users';
 
 
 function hashPassword(password) {
@@ -17,44 +17,40 @@ module.exports = {
   up: async (queryInterface) => {
     await queryInterface.sequelize.query(`ALTER SEQUENCE ${tableName}_id_seq RESTART WITH 1`);
 
-    const fakeClients = [];
+    const fakeusers = [];
     for (let i = 0; i < 100; i++) {
-      fakeClients.push({
+      fakeusers.push({
         fullName: faker.name.firstName(),
+        role: 'user',
         // photo: '',
         ...hashPassword(faker.internet.password(6)),
-        registered_at: new Date(),
-        createdAt: new Date(),
-        updatedAt: new Date()
+        created_at: new Date()
       });
     }
-    
+
     return queryInterface.bulkInsert(tableName, [
       {
-        fullName: 'Test1',
+        fullName: 'Admin1',
+        role: 'admin',
         // photo: faker.internet.avatar(),
-        ...hashPassword('123456'),
-        registered_at: new Date(),
-        createdAt: new Date(),
-        updatedAt: new Date()
+        ...hashPassword('qwerty'),
+        created_at: new Date()
       },
       {
-        fullName: 'Test2',
+        fullName: 'Client1',
+        role: 'user',
         // photo: faker.internet.avatar(),
         ...hashPassword('123456'),
-        registered_at: new Date(),
-        createdAt: new Date(),
-        updatedAt: new Date()
+        created_at: new Date()
       },
       {
-        fullName: 'Test3',
+        fullName: 'Client2',
+        role: 'user',
         // photo: faker.internet.avatar(),
         ...hashPassword('123456'),
-        registered_at: new Date(),
-        createdAt: new Date(),
-        updatedAt: new Date()
+        created_at: new Date()
       },
-      ...fakeClients
+      ...fakeusers
     ]);
   },
 

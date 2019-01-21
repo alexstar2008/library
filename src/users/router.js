@@ -1,10 +1,10 @@
 const Router = require('koa-router');
 
-// const ClientsController = require('./controller');
+// const usersController = require('./controller');
 // const Validation = require('./validation');
 
 const router = new Router({
-  prefix: '/clients'
+  prefix: '/users'
 });
 
 
